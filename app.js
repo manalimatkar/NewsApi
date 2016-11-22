@@ -41,12 +41,25 @@ var fetchArticleData = function(){
 	for (var j = 0; j < sourceArr.length ; j++) {
 		var sourceName = sourceArr[j].sourceName;
 		var sortByOpt = sourceArr[j].sortBy;
+		var category = sourceArr[j].categoryName;
 		console.log("inside fetchArticleData For Loop " + sourceName);
 		news.getArticles({
 			source: sourceName,
 			sortBy: sortByOpt
 		}).then(function(result) {
-			console.log(result);
+			// console.log(result);
+			// console.log("=============================================================================")
+			for (var x = 0; x < result.articles.length; x++) {
+				var articleObj = {
+					sourceName: sourceName,
+					sortByOpt: sortByOpt,
+					category: category,
+					article: result.articles[x]						
+				}
+				articlesArry.push(articleObj);
+			}
+			console.log(articlesArry);
+			console.log(articlesArry.length);
 		}).catch(function(err) {
 			console.log(err);
 		});
