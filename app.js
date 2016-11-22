@@ -21,11 +21,12 @@ news.getSources({
 	for (var i = 0; i < res.sources.length; i++) {
 		var categorysource = {
 			categoryName : category,
-			sourceName: res.sources[i].id 
+			sourceName: res.sources[i].id,
+			sortBy: res.sources[i].sortBysAvailable[0]
 		}
 		sourceArr.push(categorysource);	
 	}
-	// console.log(sourceArr);
+	console.log(sourceArr);
 	fetchArticleData();
 
 }).catch(function(err) {
@@ -37,10 +38,11 @@ news.getSources({
 var fetchArticleData = function(){
 	for (var j = 0; j < sourceArr.length ; j++) {
 		var sourceName = sourceArr[j].sourceName;
+		var sortByOpt = sourceArr[j].sortBy;
 		console.log("inside fetchArticleData For Loop " + sourceName);
 		news.getArticles({
 			source: sourceName,
-			sortBy: 'latest'
+			sortBy: sortByOpt
 		}).then(function(result) {
 			console.log(result);
 		}).catch(function(err) {
