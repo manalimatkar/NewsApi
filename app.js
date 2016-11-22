@@ -21,9 +21,18 @@ news.getSources({
 	for (var i = 0; i < res.sources.length; i++) {
 		var categorysource = {
 			categoryName : category,
-			sourceName: res.sources[i].id,
-			sortBy: res.sources[i].sortBysAvailable[0]
+			sourceId: res.sources[i].id,
+			sortBy: res.sources[i].sortBysAvailable[0],
+			sourceDetails: {
+				name: res.sources[i].name,
+				description: res.sources[i].description,
+				url: res.sources[i].url,
+				language: res.sources[i].language,
+				country: res.sources[i].country,
+				logoUrl: res.sources[i].urlsToLogos
+			}
 		}
+
 		sourceArr.push(categorysource);	
 	}
 
@@ -39,9 +48,10 @@ news.getSources({
 
 var fetchArticleData = function(){
 	for (var j = 0; j < sourceArr.length ; j++) {
-		var sourceName = sourceArr[j].sourceName;
+		var sourceName = sourceArr[j].sourceId;
 		var sortByOpt = sourceArr[j].sortBy;
 		var category = sourceArr[j].categoryName;
+		var sourceInfo = sourceArr[j].sourceDetails;
 		console.log("inside fetchArticleData For Loop " + sourceName);
 		news.getArticles({
 			source: sourceName,
@@ -54,12 +64,13 @@ var fetchArticleData = function(){
 					sourceName: sourceName,
 					sortByOpt: sortByOpt,
 					category: category,
-					article: result.articles[x]						
+					article: result.articles[x],
+					source: sourceInfo						
 				}
+
 				articlesArry.push(articleObj);
 			}
 			console.log(articlesArry);
-			console.log(articlesArry.length);
 		}).catch(function(err) {
 			console.log(err);
 		});
