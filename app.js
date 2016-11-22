@@ -9,10 +9,10 @@ var news = new NewsApi({
 var sourceArr = [];
 
 var articlesArry = [];
-
-//You can also use promises!
+// this code will cover search for top stories from 
+// multiple sources when user selects the category from grid layout
 news.getSources({
-	category: 'business',
+	category: 'business', //replace category with value user selects
 	language: 'en',
 	country: 'us'
 }).then(function(res) {
@@ -26,7 +26,9 @@ news.getSources({
 		}
 		sourceArr.push(categorysource);	
 	}
-	console.log(sourceArr);
+
+	console.log(sourceArr);	
+
 	fetchArticleData();
 
 }).catch(function(err) {
